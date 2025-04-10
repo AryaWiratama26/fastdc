@@ -7,7 +7,7 @@ try:
     spacy.load("en_core_web_sm")
 except OSError:
     from spacy.cli import download
-    print("🔧 Downloading 'en_core_web_sm' model...")
+    print("Downloading 'en_core_web_sm' model...")
     download("en_core_web_sm")
 
 class FastdcTrainer:
