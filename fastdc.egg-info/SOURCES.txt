@@ -1,0 +1,10 @@
+README.md
+setup.py
+fastdc/__init__.py
+fastdc/bot.py
+fastdc/trainer.py
+fastdc.egg-info/PKG-INFO
+fastdc.egg-info/SOURCES.txt
+fastdc.egg-info/dependency_links.txt
+fastdc.egg-info/requires.txt
+fastdc.egg-info/top_level.txt

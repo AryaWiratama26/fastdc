@@ -1,0 +1,5 @@
+chatterbot
+discord.py
+groq
+python-dotenv
+spacy
