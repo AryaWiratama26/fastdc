@@ -8,6 +8,8 @@ BOT_KEY = os.getenv('API_BOT_KEY')
 
 bot = FastBot(token=BOT_KEY)
 bot.auto_reply(trigger="Hello Semuanya", response='Halo Juga')
+bot.welcome_member()
+bot.leave_member()
 bot.train_bot()
 bot.ai_chat(api_key_usr=API_KEY)
 bot.run()

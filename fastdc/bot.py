@@ -34,6 +34,46 @@ class FastBot:
                 await message.channel.send(response)
             await self.bot.process_commands(message)
             
+    def welcome_member(self):
+        
+        """
+            Sends a welcome message to new members who join the Discord server.
+            The message is sent in the server's system channel if it exists.
+        """
+        
+        @self.bot.event
+        async def on_member_join(member):
+            channel = member.guild.system_channel
+            
+            if not channel:
+                for ch in member.guild.text_channels:
+                    if ch.permissions_for(member.guild.me).send_messages:
+                        channel = ch
+                        break
+                    
+            if channel:
+                await channel.send(f"Hello {member.name}, Welcome to Server! 👋")
+                
+    def leave_member(self):
+        
+        """
+            Sends a farewell message to the system channel (or first accessible channel) 
+            when a member leaves the server.
+        """
+        
+        @self.bot.event
+        async def on_member_remove(member):
+            channel = member.guild.system_channel
+            
+            if not channel:
+                for ch in member.guild.text_channels:
+                    if ch.permissions_for(member.guild.me).send_messages:
+                        channel = ch
+                        break
+            
+            if channel:
+                await channel.send(f"{member.name} has left the server 🖐️")
+            
     def ai_chat(self, api_key_usr):
         
         """
