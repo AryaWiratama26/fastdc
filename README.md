@@ -34,6 +34,10 @@ bot.ai_chat(api_key_usr="YOUR_GROQ_API_KEY")
 # Train the bot from a local file
 bot.train_bot()  # Make sure 'data_train.txt' exists
 
+# Welcome and leave notifications
+bot.welcome_member()
+bot.leave_member()
+
 # Run the bot
 bot.run()
 ```
@@ -80,6 +84,22 @@ Simply create a file named `data_train.txt` in your project root with Q&A pairs.
 Q: What is FastDC?
 A: FastDC is a Python library for creating Discord bots quickly.
 ```
+
+---
+
+## 👋 Member Join & Leave Events
+
+Welcome and farewell messages are built-in.
+
+```python
+bot.welcome_member()
+bot.leave_member()
+```
+
+These functions send automatic messages to the **system channel** when members join or leave the server:
+
+- `welcome_member()` → `"Hello {username}, Welcome to Server!"`
+- `leave_member()` → `"{username} has left the server 🖐️"`
 
 ---
 
