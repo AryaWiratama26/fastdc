@@ -1,3 +1,4 @@
+LICENSE
 README.md
 setup.py
 fastdc/__init__.py
