@@ -1,0 +1,21 @@
+[
+    {
+      "category": "general",
+      "question": "What is the capital of France?",
+      "options": ["A) Berlin", "B) Madrid", "C) Paris", "D) Rome"],
+      "answer": "C"
+    },
+    {
+      "category": "literature",
+      "question": "Who wrote 'To Kill a Mockingbird'?",
+      "options": ["A) Harper Lee", "B) Mark Twain", "C) Jane Austen", "D) J.K. Rowling"],
+      "answer": "A"
+    },
+    {
+      "category": "science",
+      "question": "Which planet is known as the Red Planet?",
+      "options": ["A) Earth", "B) Mars", "C) Jupiter", "D) Venus"],
+      "answer": "B"
+    }
+  ]
+  

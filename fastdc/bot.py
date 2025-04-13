@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from .trainer import FastdcTrainer
+import random
+import json
 
 class FastBot:
     def __init__(self, token: str, prefix: str = "!"):
@@ -127,6 +129,63 @@ class FastBot:
         async def askbot(ctx, *, message):
             response = self.trainer.get_response(message)
             await ctx.send(response)
+            
+    def trivia_game(self, json_path="trivia_questions.json"):
+        
+        """
+        Adds a trivia game command with categories, score tracking, and leaderboard.
+        Questions are loaded from a JSON file.
+        """
+        self.scores = {}
+        with open(json_path, "r") as file:
+            all_questions = json.load(file)
+
+        @self.bot.command()
+        async def trivia(ctx, category=None):
+            questions = all_questions
+            if category:
+                questions = [q for q in all_questions if q["category"].lower() == category.lower()]
+                if not questions:
+                    await ctx.send("❌ No questions found in that category.")
+                    return
+
+            q = random.choice(questions)
+            embed = discord.Embed(title="🧠 Trivia Time!", description=q["question"], color=0x38bdf8)
+            embed.add_field(name="Options", value="\n".join(q["options"]), inline=False)
+            embed.set_footer(text="Reply with A, B, C, or D")
+
+            await ctx.send(embed=embed)
+
+            def check(m):
+                return (
+                    m.author == ctx.author
+                    and m.channel == ctx.channel
+                    and m.content.upper() in ["A", "B", "C", "D"]
+                )
+
+            try:
+                msg = await self.bot.wait_for("message", check=check, timeout=20.0)
+                if msg.content.upper() == q["answer"]:
+                    await ctx.send("✅ Correct!")
+                    self.scores[msg.author.name] = self.scores.get(msg.author.name, 0) + 1
+                else:
+                    await ctx.send(f"❌ Wrong! The correct answer was {q['answer']}")
+            except:
+                await ctx.send("⌛ Time's up!")
+
+        @self.bot.command()
+        async def trivia_score(ctx):
+            score = self.scores.get(ctx.author.name, 0)
+            await ctx.send(f"🎯 {ctx.author.name}, your score is **{score}**.")
+
+        @self.bot.command()
+        async def trivia_leaderboard(ctx):
+            if not self.scores:
+                await ctx.send("📉 No scores yet.")
+                return
+            sorted_scores = sorted(self.scores.items(), key=lambda x: x[1], reverse=True)
+            leaderboard = "\n".join([f"🏅 {user}: {score}" for user, score in sorted_scores[:5]])
+            await ctx.send(f"📊 **Leaderboard**\n{leaderboard}")
 
     def run(self):
         """
