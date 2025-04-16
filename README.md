@@ -34,6 +34,9 @@ bot.ai_chat(api_key_usr="YOUR_GROQ_API_KEY")
 # Train the bot from a local file
 bot.train_bot()  # Make sure 'data_train.txt' exists
 
+# Trivia bot from json
+bot.trivia_game(json_path="questions.json")
+
 # Welcome and leave notifications
 bot.welcome_member()
 bot.leave_member()
