@@ -53,6 +53,10 @@ bot.run()
 |--------------------|----------------------------------------------------------|
 | `!askbot {question}` | Ask a question based on trained data (`data_train.txt`) |
 | `!ai {prompt}`     | Interact with an AI using Groq API                        |
+| `!trivia`     | Start trivia game                        |
+| `!trivia_score`     | Show trivia score                        |
+| `!trivia_leaderboard`     | Show trivia leaderboard                        |
+
 
 ---
 
@@ -106,11 +110,38 @@ These functions send automatic messages to the **system channel** when members j
 
 ---
 
-## 👀 Preview
+<!-- ## 👀 Preview
 
 <p align="center">
   <img src="/doc-ss/preview.png" alt="FastDC Bot on discord" width="80%">
-</p>
+</p> -->
+
+## {} Json Trivia Format
+
+```json
+
+[
+    {
+      "category": "general",
+      "question": "What is the capital of France?",
+      "options": ["A) Berlin", "B) Madrid", "C) Paris", "D) Rome"],
+      "answer": "C"
+    },
+    {
+      "category": "literature",
+      "question": "Who wrote 'To Kill a Mockingbird'?",
+      "options": ["A) Harper Lee", "B) Mark Twain", "C) Jane Austen", "D) J.K. Rowling"],
+      "answer": "A"
+    },
+    {
+      "category": "science",
+      "question": "Which planet is known as the Red Planet?",
+      "options": ["A) Earth", "B) Mars", "C) Jupiter", "D) Venus"],
+      "answer": "B"
+    }
+  ]
+  
+```
 
 ## 🙌 Contribution
 
