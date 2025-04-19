@@ -160,6 +160,9 @@ Licensed under the [MIT License](LICENSE).
 
 If you like this project, consider giving it a ⭐ on GitHub or sharing it with others!
 
+## 🌐 Website Documentation
+[FastDC Website](https://fastdc.vercel.app/)|
+
 ## Note : 
 - This project will be update
 ---
