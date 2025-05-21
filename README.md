@@ -1,8 +1,10 @@
 # ⚡ FastDC
 
 <p align="center">
-  <img src="/doc-ss/banner.png" alt="FastDC Banner" width="100%">
+  <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
+  <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
 </p>
+
 
 **FastDC** is a lightweight and powerful Python library designed to help you build Discord bots effortlessly. With built-in support for command handling, AI chat, bot training, and more, FastDC helps you go from idea to implementation in seconds.
 
@@ -161,7 +163,7 @@ Licensed under the [MIT License](LICENSE).
 If you like this project, consider giving it a ⭐ on GitHub or sharing it with others!
 
 ## 🌐 Website Documentation
-[FastDC Website](https://fastdc.vercel.app/)|
+[FastDC Website](https://fastdc.vercel.app/)
 
 ## Note : 
 - This project will be update
