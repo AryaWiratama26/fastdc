@@ -5,8 +5,7 @@
   <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
 </p>
 
-
-**FastDC** is a lightweight and powerful Python library designed to help you build Discord bots effortlessly. With built-in support for command handling, AI chat, bot training, and more, FastDC helps you go from idea to implementation in seconds.
+**FastDC** is a powerful, modular, and AI-integrated Discord bot framework that helps you build feature-rich Discord bots effortlessly. With built-in support for multiple AI providers, command handling, moderation tools, and more, FastDC helps you go from idea to implementation in seconds.
 
 ---
 
@@ -27,11 +26,27 @@ from fastdc import FastBot
 
 bot = FastBot(token="YOUR_DISCORD_TOKEN")
 
+# Setup AI providers
+bot.add_ai_provider("groq", "YOUR_GROQ_API_KEY")
+bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
+
+# Enable AI chat with multiple providers
+bot.ai_chat(provider="groq")  # or "openai"
+
+# Setup command categories and help system
+bot.setup_command_categories()
+
+# Add moderation commands
+bot.add_moderation_commands()
+
+# Add utility commands
+bot.add_utility_commands()
+
+# Setup event logging
+bot.setup_event_logging()
+
 # Auto-reply feature
 bot.auto_reply(trigger="hi", response="Hello!")
-
-# Enable AI chat with Groq API
-bot.ai_chat(api_key_usr="YOUR_GROQ_API_KEY")
 
 # Train the bot from a local file
 bot.train_bot()  # Make sure 'data_train.txt' exists
@@ -51,14 +66,32 @@ bot.run()
 
 ## 💬 Discord Commands
 
+### 🤖 AI Commands
 | Command            | Description                                              |
 |--------------------|----------------------------------------------------------|
-| `!askbot {question}` | Ask a question based on trained data (`data_train.txt`) |
-| `!ai {prompt}`     | Interact with an AI using Groq API                        |
-| `!trivia`     | Start trivia game                        |
-| `!trivia_score`     | Show trivia score                        |
-| `!trivia_leaderboard`     | Show trivia leaderboard                        |
+| `!ai {prompt}`     | Interact with AI using configured provider (Groq/OpenAI)  |
+| `!askbot {question}` | Ask a question based on trained data                     |
 
+### 🎮 Games
+| Command            | Description                                              |
+|--------------------|----------------------------------------------------------|
+| `!trivia`          | Start trivia game                                        |
+| `!trivia_score`    | Show trivia score                                        |
+| `!trivia_leaderboard` | Show trivia leaderboard                              |
+
+### 👮 Moderation
+| Command            | Description                                              |
+|--------------------|----------------------------------------------------------|
+| `!kick @user [reason]` | Kick a user from the server                          |
+| `!ban @user [reason]`  | Ban a user from the server                           |
+| `!clear [amount]`      | Clear specified number of messages                    |
+
+### ⚙️ Utility
+| Command            | Description                                              |
+|--------------------|----------------------------------------------------------|
+| `!ping`            | Check bot latency                                        |
+| `!serverinfo`      | Display server information                              |
+| `!bothelp`         | Show help menu with all commands                        |
 
 ---
 
@@ -74,12 +107,17 @@ To create your bot, follow these steps:
 
 ---
 
-## 🧠 Groq AI API Key
+## 🧠 AI Integration
 
-To use the `!ai` command, you'll need an API key from Groq:
+FastDC supports multiple AI providers:
 
+### Groq
 - Visit [Groq Console](https://console.groq.com/)
 - Sign in and generate your API key
+
+### OpenAI
+- Visit [OpenAI Platform](https://platform.openai.com/)
+- Create an account and generate your API key
 
 ---
 
@@ -112,38 +150,17 @@ These functions send automatic messages to the **system channel** when members j
 
 ---
 
-<!-- ## 👀 Preview
+## 🔍 Event Logging
 
-<p align="center">
-  <img src="/doc-ss/preview.png" alt="FastDC Bot on discord" width="80%">
-</p> -->
+FastDC includes a built-in logging system that tracks:
+- Command usage
+- Errors and exceptions
+- Bot events
+- AI interactions
 
-## {} Json Trivia Format
+Logs are formatted and can be easily integrated with your preferred logging system.
 
-```json
-
-[
-    {
-      "category": "general",
-      "question": "What is the capital of France?",
-      "options": ["A) Berlin", "B) Madrid", "C) Paris", "D) Rome"],
-      "answer": "C"
-    },
-    {
-      "category": "literature",
-      "question": "Who wrote 'To Kill a Mockingbird'?",
-      "options": ["A) Harper Lee", "B) Mark Twain", "C) Jane Austen", "D) J.K. Rowling"],
-      "answer": "A"
-    },
-    {
-      "category": "science",
-      "question": "Which planet is known as the Red Planet?",
-      "options": ["A) Earth", "B) Mars", "C) Jupiter", "D) Venus"],
-      "answer": "B"
-    }
-  ]
-  
-```
+---
 
 ## 🙌 Contribution
 
@@ -166,5 +183,5 @@ If you like this project, consider giving it a ⭐ on GitHub or sharing it with 
 [FastDC Website](https://fastdc.vercel.app/)
 
 ## Note : 
-- This project will be update
+- This project will be updated regularly with new features and improvements
 ---
