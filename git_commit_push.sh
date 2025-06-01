@@ -2,7 +2,7 @@
 
 git add .
 
-read -p "Masukkan pesan commit: " commit_message
+read -p "Commit Message: " commit_message
 
 git commit -m "$commit_message"
 
