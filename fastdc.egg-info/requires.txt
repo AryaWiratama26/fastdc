@@ -1,7 +1,9 @@
-SQLAlchemy
-chatterbot
-discord.py
-groq
-openai
-python-dotenv
-spacy
+SQLAlchemy>=2.0.0
+aiohttp>=3.8.0
+chatterbot-corpus>=1.2.0
+chatterbot>=1.0.0
+discord.py>=2.3.0
+groq>=0.3.0
+openai>=1.0.0
+python-dotenv>=1.0.0
+spacy>=3.0.0

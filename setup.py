@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='fastdc',
-    version='1.3',
+    version='1.4',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
     description='FastDC: A fast, modular, and AI-integrated Discord bot framework.',
@@ -14,13 +14,15 @@ setup(
     packages=find_packages(),
     package_data={"fastdc": ["*.py"]},
     install_requires=[
-        'discord.py',
-        'chatterbot',
-        'spacy',
-        'python-dotenv',
-        'groq',
-        'openai',
-        'SQLAlchemy'
+        'discord.py>=2.3.0',
+        'groq>=0.3.0',
+        'openai>=1.0.0',
+        'aiohttp>=3.8.0',
+        'python-dotenv>=1.0.0',
+        'chatterbot>=1.0.0',
+        'chatterbot-corpus>=1.2.0',
+        'SQLAlchemy>=2.0.0',
+        'spacy>=3.0.0', 
     ],
     python_requires='>=3.10',
 )
