@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='fastdc',
-    version='1.2',
+    version='1.3',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
     description='FastDC: A fast, modular, and AI-integrated Discord bot framework.',
@@ -19,6 +19,8 @@ setup(
         'spacy',
         'python-dotenv',
         'groq',
+        'openai',
+        'SQLAlchemy'
     ],
     python_requires='>=3.10',
 )

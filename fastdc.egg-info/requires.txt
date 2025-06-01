@@ -1,5 +1,7 @@
+SQLAlchemy
 chatterbot
 discord.py
 groq
+openai
 python-dotenv
 spacy
