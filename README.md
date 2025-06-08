@@ -1,13 +1,12 @@
-# FastDC
+<p align="center">
+  <img src="/doc-ss/banner2.png" alt="Banner-Logo" />
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
   <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
 </p>
 
-<p align="center">
-  <img src="/doc-ss/banner2.png" alt="Banner-Logo" />
-</p>
 
 **FastDC** is a powerful, modular, and AI-integrated Discord bot framework that helps you build feature-rich Discord bots effortlessly. With built-in support for multiple AI providers, command handling, moderation tools, and more, FastDC helps you go from idea to implementation in seconds.
 
