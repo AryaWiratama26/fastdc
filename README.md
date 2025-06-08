@@ -1,4 +1,4 @@
-# ⚡ FastDC
+# FastDC
 
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
@@ -9,7 +9,7 @@
 
 ---
 
-## 📦 Installation
+## Installation
 
 Install FastDC via pip:
 
@@ -19,7 +19,7 @@ pip install fastdc
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```python
 from fastdc import FastBot
@@ -64,29 +64,29 @@ bot.run()
 
 ---
 
-## 💬 Discord Commands
+## Discord Commands
 
-### 🤖 AI Commands
+### AI Commands
 | Command            | Description                                              |
 |--------------------|----------------------------------------------------------|
 | `!ai {prompt}`     | Interact with AI using configured provider (Groq/OpenAI)  |
 | `!askbot {question}` | Ask a question based on trained data                     |
 
-### 🎮 Games
+### Games
 | Command            | Description                                              |
 |--------------------|----------------------------------------------------------|
 | `!trivia`          | Start trivia game                                        |
 | `!trivia_score`    | Show trivia score                                        |
 | `!trivia_leaderboard` | Show trivia leaderboard                              |
 
-### 👮 Moderation
+### Moderation
 | Command            | Description                                              |
 |--------------------|----------------------------------------------------------|
 | `!kick @user [reason]` | Kick a user from the server                          |
 | `!ban @user [reason]`  | Ban a user from the server                           |
 | `!clear [amount]`      | Clear specified number of messages                    |
 
-### ⚙️ Utility
+### Utility
 | Command            | Description                                              |
 |--------------------|----------------------------------------------------------|
 | `!ping`            | Check bot latency                                        |
@@ -95,7 +95,7 @@ bot.run()
 
 ---
 
-## 🔑 Discord Bot Token Setup
+## Discord Bot Token Setup
 
 To create your bot, follow these steps:
 
@@ -107,7 +107,7 @@ To create your bot, follow these steps:
 
 ---
 
-## 🧠 AI Integration
+## AI Integration
 
 FastDC supports multiple AI providers:
 
@@ -121,20 +121,20 @@ FastDC supports multiple AI providers:
 
 ---
 
-## 📁 Training Your Bot
+## Training Your Bot
 
 The `train_bot()` method allows your bot to respond based on your own dataset.  
 Simply create a file named `data_train.txt` in your project root with Q&A pairs.
 
 **Example format**:
 ```
-Q: What is FastDC?
-A: FastDC is a Python library for creating Discord bots quickly.
+What is FastDC?
+FastDC is a Python library for creating Discord bots quickly.
 ```
 
 ---
 
-## 👋 Member Join & Leave Events
+## Member Join & Leave Events
 
 Welcome and farewell messages are built-in.
 
@@ -150,7 +150,7 @@ These functions send automatic messages to the **system channel** when members j
 
 ---
 
-## 🔍 Event Logging
+## Event Logging
 
 FastDC includes a built-in logging system that tracks:
 - Command usage
@@ -162,14 +162,14 @@ Logs are formatted and can be easily integrated with your preferred logging syst
 
 ---
 
-## 🙌 Contribution
+## Contribution
 
 Contributions are welcome!  
 If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
 ---
 
-## 📄 License
+## License
 
 Licensed under the [MIT License](LICENSE).
 
@@ -179,8 +179,8 @@ Licensed under the [MIT License](LICENSE).
 
 If you like this project, consider giving it a ⭐ on GitHub or sharing it with others!
 
-## 🌐 Website Documentation
-[FastDC Website](https://fastdc.vercel.app/)
+<!-- ## 🌐 Website Documentation -->
+<!-- [FastDC Website](https://fastdc.vercel.app/) -->
 
 ## Note : 
 - This project will be updated regularly with new features and improvements
