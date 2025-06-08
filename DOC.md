@@ -1,16 +1,3 @@
-Metadata-Version: 2.1
-Name: fastdc
-Version: 1.5
-Summary: A fast, modular, and AI-integrated Discord bot framework.
-Home-page: UNKNOWN
-Author: Arya Wiratama
-Author-email: aryawiratama2401@gmail.com
-License: UNKNOWN
-Platform: UNKNOWN
-Requires-Python: >=3.10
-Description-Content-Type: text/markdown
-License-File: LICENSE
-
 # FastDC
 
 <p align="center">
@@ -195,4 +182,3 @@ Licensed under the [MIT License](LICENSE).
 ## Note : 
 - This project will be updated regularly with new features and improvements
 ---
-
