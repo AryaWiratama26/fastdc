@@ -6,7 +6,7 @@ load_dotenv()
 
 # Get tokens from environment variables
 DISCORD_TOKEN = os.getenv('API_BOT_KEY')
-GROQ_API_KEY = os.getenv('API_BOT_KEY')
+GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 def main():
@@ -16,6 +16,8 @@ def main():
     # Setup AI providers
     bot.add_ai_provider("groq", GROQ_API_KEY)
     # bot.add_ai_provider("openai", OPENAI_API_KEY)
+    
+    bot.ai_chat(provider='groq')
 
     # Setup command categories and help system
     bot.setup_command_categories()
@@ -30,7 +32,7 @@ def main():
     bot.setup_event_logging()
 
     # Add auto-reply feature
-    bot.auto_reply(trigger="hi", response="Hello! 👋 How can I help you today?")
+    bot.auto_reply(trigger="hi", response="Hello! How can I help you today?")
 
     # Train the bot from data_train.txt
     bot.train_bot()

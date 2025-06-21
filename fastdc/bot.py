@@ -110,10 +110,10 @@ class FastBot:
             )
             
             categories = {
-                "🤖 AI Commands": ["ai", "askbot"],
-                "🎮 Games": ["trivia", "trivia_score", "trivia_leaderboard"],
-                "👋 Welcome": ["welcome", "leave"],
-                "⚙️ Utility": ["ping", "serverinfo"]
+                "AI Commands": ["ai", "askbot"],
+                "Games": ["trivia", "trivia_score", "trivia_leaderboard"],
+                "Welcome": ["welcome", "leave"],
+                "Utility": ["ping", "serverinfo"]
             }
             
             for category, commands in categories.items():
@@ -137,20 +137,20 @@ class FastBot:
         @commands.has_permissions(ban_members=True)
         async def ban(ctx, member: discord.Member, *, reason=None):
             await member.ban(reason=reason)
-            await ctx.send(f"🔨 {member.name} has been banned. Reason: {reason}")
+            await ctx.send(f"{member.name} has been banned. Reason: {reason}")
 
         @self.bot.command()
         @commands.has_permissions(manage_messages=True)
         async def clear(ctx, amount: int):
             await ctx.channel.purge(limit=amount + 1)
-            await ctx.send(f"🧹 Cleared {amount} messages.", delete_after=5)
+            await ctx.send(f"Cleared {amount} messages.", delete_after=5)
 
     def add_utility_commands(self):
         """Add utility commands"""
         @self.bot.command()
         async def ping(ctx):
             latency = round(self.bot.latency * 1000)
-            await ctx.send(f"🏓 Pong! Latency: {latency}ms")
+            await ctx.send(f"Latency: {latency}ms")
 
         @self.bot.command()
         async def serverinfo(ctx):
@@ -168,9 +168,9 @@ class FastBot:
         @self.bot.event
         async def on_command_error(ctx, error):
             if isinstance(error, commands.CommandOnCooldown):
-                await ctx.send(f"⏰ Please wait {error.retry_after:.2f}s before using this command again.")
+                await ctx.send(f"Please wait {error.retry_after:.2f}s before using this command again.")
             elif isinstance(error, commands.MissingPermissions):
-                await ctx.send("❌ You don't have permission to use this command.")
+                await ctx.send("You don't have permission to use this command.")
             else:
                 self.logger.error(f"Command error: {str(error)}")
 
@@ -203,7 +203,7 @@ class FastBot:
                 await message.channel.send(response)
             await self.bot.process_commands(message)
             
-    def welcome_member(self):
+    def welcome_member(self, message = "Hello {member}, welcome to Server!"):
         
         """
             Sends a welcome message to new members who join the Discord server.
@@ -220,10 +220,18 @@ class FastBot:
                         channel = ch
                         break
                     
-            if channel:
-                await channel.send(f"Hello {member.name}, Welcome to Server! 👋")
+            if "{member}" not in message:
+                message_to_send = "Hello {member}, welcome to Server!"   
+            else:
+                message_to_send = message 
                 
-    def leave_member(self):
+            message_welcome = message_to_send.replace("{member}", member.name)
+            
+            
+            if channel:
+                await channel.send(f"{message_welcome}")
+                
+    def leave_member(self, message = "{member} has left the server"):
         
         """
             Sends a farewell message to the system channel (or first accessible channel) 
@@ -239,9 +247,16 @@ class FastBot:
                     if ch.permissions_for(member.guild.me).send_messages:
                         channel = ch
                         break
+                    
+            if "{member}" not in message:
+                message_to_send = "{member} has left the server"   
+            else:
+                message_to_send = message 
+                
+            message_leave = message_to_send.replace("{member}", member.name)
             
             if channel:
-                await channel.send(f"{member.name} has left the server 🖐️")
+                await channel.send(f"{message_leave}")
             
     def train_bot(self):
         
@@ -270,7 +285,7 @@ class FastBot:
             if category:
                 questions = [q for q in all_questions if q["category"].lower() == category.lower()]
                 if not questions:
-                    await ctx.send("❌ No questions found in that category.")
+                    await ctx.send("No questions found in that category.")
                     return
 
             q = random.choice(questions)
