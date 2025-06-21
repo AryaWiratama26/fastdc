@@ -9,6 +9,7 @@
 
 
 **FastDC** is a library designed to make creating Discord bots easier.
+
 ---
 
 ## Installation

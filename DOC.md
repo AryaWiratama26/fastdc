@@ -1,11 +1,9 @@
-# FastDC
-
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
   <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
 </p>
 
-**FastDC** is a powerful, modular, and AI-integrated Discord bot framework that helps you build feature-rich Discord bots effortlessly. With built-in support for multiple AI providers, command handling, moderation tools, and more, FastDC helps you go from idea to implementation in seconds.
+**FastDC** is a library designed to make creating Discord bots easier.
 
 ---
 
@@ -26,12 +24,12 @@ from fastdc import FastBot
 
 bot = FastBot(token="YOUR_DISCORD_TOKEN")
 
-# Setup AI providers
+# Setup AI, You can use groq or openai
 bot.add_ai_provider("groq", "YOUR_GROQ_API_KEY")
 bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
 
-# Enable AI chat with multiple providers
-bot.ai_chat(provider="groq")  # or "openai"
+# Enable AI 
+bot.ai_chat(provider="groq")  # or u can use openai
 
 # Setup command categories and help system
 bot.setup_command_categories()
@@ -45,18 +43,24 @@ bot.add_utility_commands()
 # Setup event logging
 bot.setup_event_logging()
 
-# Auto-reply feature
+# Auto-reply
 bot.auto_reply(trigger="hi", response="Hello!")
 
 # Train the bot from a local file
-bot.train_bot()  # Make sure 'data_train.txt' exists
+bot.train_bot()  
 
 # Trivia bot from json
 bot.trivia_game(json_path="questions.json")
 
 # Welcome and leave notifications
-bot.welcome_member()
-bot.leave_member()
+"""
+If {member} is not included in the message, the bot will use the default welcome message.
+
+Default Welcome Message = "Hello {member}, welcome to Server!"
+Default Leave Message = "{member} has left the server"
+"""
+bot.welcome_member(message="Helloww, welcome {member}")
+bot.leave_member(message="Goodbye {member}")
 
 # Run the bot
 bot.run()
@@ -102,9 +106,6 @@ To create your bot, follow these steps:
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
 2. Create a new application and add a bot.
 3. Enable all **Privileged Gateway Intents**.
-
-   ![Enable Intents](/doc-ss/intents.png)
-
 ---
 
 ## AI Integration
@@ -136,19 +137,12 @@ FastDC is a Python library for creating Discord bots quickly.
 
 ## Member Join & Leave Events
 
-Welcome and farewell messages are built-in.
+Welcome and leave message
 
 ```python
 bot.welcome_member()
 bot.leave_member()
 ```
-
-These functions send automatic messages to the **system channel** when members join or leave the server:
-
-- `welcome_member()` → `"Hello {username}, Welcome to Server!"`
-- `leave_member()` → `"{username} has left the server 🖐️"`
-
----
 
 ## Event Logging
 
@@ -159,23 +153,6 @@ FastDC includes a built-in logging system that tracks:
 - AI interactions
 
 Logs are formatted and can be easily integrated with your preferred logging system.
-
----
-
-## Contribution
-
-Contributions are welcome!  
-If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
-
----
-
-## License
-
-Licensed under the [MIT License](LICENSE).
-
-## Github
-
-[FastDc Github](https://github.com/AryaWiratama26/fastdc)
 
 ---
 
