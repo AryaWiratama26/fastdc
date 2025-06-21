@@ -5,10 +5,10 @@ with open('DOC.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='fastdc',
-    version='1.5',
+    version='1.6',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
-    description='A fast, modular, and AI-integrated Discord bot framework.',
+    description='is a library designed to make creating Discord bots easier.',
     long_description=res,
     long_description_content_type="text/markdown",
     packages=find_packages(),
