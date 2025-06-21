@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
-  <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
+  <img src="https://static.pepy.tech/badge/fastdc" alt="PyPI - Downloads" />
 </p>
 
 
