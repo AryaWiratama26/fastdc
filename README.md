@@ -27,6 +27,10 @@ pip install fastdc
 ```python
 from fastdc import FastBot
 
+
+"""
+- Default prefix = '!'
+"""
 bot = FastBot(token="YOUR_DISCORD_TOKEN")
 
 # Setup AI, You can use groq or openai
