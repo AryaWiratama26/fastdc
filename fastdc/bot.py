@@ -131,7 +131,7 @@ class FastBot:
         @commands.has_permissions(kick_members=True)
         async def kick(ctx, member: discord.Member, *, reason=None):
             await member.kick(reason=reason)
-            await ctx.send(f"👢 {member.name} has been kicked. Reason: {reason}")
+            await ctx.send(f"{member.name} has been kicked. Reason: {reason}")
 
         @self.bot.command()
         @commands.has_permissions(ban_members=True)
@@ -203,11 +203,17 @@ class FastBot:
                 await message.channel.send(response)
             await self.bot.process_commands(message)
             
-    def welcome_member(self, message = "Hello {member}, welcome to Server!"):
+    def welcome_member(self, message : str = "Hello {member}, welcome to Server!"):
         
         """
             Sends a welcome message to new members who join the Discord server.
             The message is sent in the server's system channel if it exists.
+            
+            Parameters:
+            ----------
+            message : str
+                Format messagee for member join the channel
+            
         """
         
         @self.bot.event
@@ -231,11 +237,17 @@ class FastBot:
             if channel:
                 await channel.send(f"{message_welcome}")
                 
-    def leave_member(self, message = "{member} has left the server"):
+    def leave_member(self, message : str = "{member} has left the server"):
         
         """
-            Sends a farewell message to the system channel (or first accessible channel) 
+            Sends a leave message to the system channel
             when a member leaves the server.
+            
+            Parameters:
+            ----------
+            message : str
+                Format messagee for member leaving the channel
+            
         """
         
         @self.bot.event
@@ -269,11 +281,16 @@ class FastBot:
             response = self.trainer.get_response(message)
             await ctx.send(response)
             
-    def trivia_game(self, json_path="trivia_questions.json"):
+    def trivia_game(self, json_path ="trivia_questions.json"):
         
         """
         Adds a trivia game command with categories, score tracking, and leaderboard.
         Questions are loaded from a JSON file.
+        
+        Parameters:
+        ----------
+            json_path : str
+                JSON file location/Path
         """
         self.scores = {}
         with open(json_path, "r") as file:
