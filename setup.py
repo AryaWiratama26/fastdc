@@ -8,7 +8,7 @@ setup(
     version='1.6',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
-    description='is a library designed to make creating Discord bots easier.',
+    description='Fastdc is a library designed to make creating Discord bots easier.',
     long_description=res,
     long_description_content_type="text/markdown",
     packages=find_packages(),

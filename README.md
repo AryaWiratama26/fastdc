@@ -30,6 +30,11 @@ from fastdc import FastBot
 bot = FastBot(token="YOUR_DISCORD_TOKEN")
 
 # Setup AI, You can use groq or openai
+
+""""
+- Default model for groq = 'llama-3.3-70b-versatile'
+- Default model for open ai = 'gpt-3.5-turbo'
+"""
 bot.add_ai_provider("groq", "YOUR_GROQ_API_KEY")
 bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
 
