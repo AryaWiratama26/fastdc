@@ -126,7 +126,9 @@ class FastBot:
             await ctx.send(embed=embed)
 
     def add_moderation_commands(self):
-        """Add basic moderation commands"""
+        """
+        Add basic moderation commands for kick, ban and clear message
+        """
         @self.bot.command()
         @commands.has_permissions(kick_members=True)
         async def kick(ctx, member: discord.Member, *, reason=None):
@@ -146,7 +148,10 @@ class FastBot:
             await ctx.send(f"Cleared {amount} messages.", delete_after=5)
 
     def add_utility_commands(self):
-        """Add utility commands"""
+        """
+        Add utility commands for ping and server info
+        
+        """
         @self.bot.command()
         async def ping(ctx):
             latency = round(self.bot.latency * 1000)
