@@ -1,6 +1,12 @@
+# Venv
 venv/
 .env
 __pycache__/
+
+# Sqlite
 db.sqlite3
 db.sqlite3-shm
 db.sqlite3-wal
+
+# Shell Scripting
+*.sh
