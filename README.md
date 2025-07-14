@@ -45,6 +45,9 @@ bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
 # Enable AI 
 bot.ai_chat(provider="groq")  # or u can use openai
 
+# Custom info command AI with default groq (This feature has not been released yet)
+bot.custom_info_command(data_path="data.txt")
+
 # Setup command categories and help system
 bot.setup_command_categories()
 
