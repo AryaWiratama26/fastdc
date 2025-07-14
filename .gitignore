@@ -10,3 +10,7 @@ db.sqlite3-wal
 
 # Shell Scripting
 *.sh
+
+# Txt
+data.txt
+data_train.txt
