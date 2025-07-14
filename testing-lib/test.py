@@ -7,7 +7,7 @@ load_dotenv()
 # Get tokens from environment variables
 DISCORD_TOKEN = os.getenv('API_BOT_KEY')
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 def main():
     # Initialize the bot
@@ -36,6 +36,8 @@ def main():
 
     # Train the bot from data_train.txt
     bot.train_bot()
+    
+    bot.custom_info_command(data_path="data.txt")
 
     # Setup trivia game
     bot.trivia_game(json_path="questions.json")

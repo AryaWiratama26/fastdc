@@ -311,7 +311,7 @@ class FastBot:
                     return
 
             q = random.choice(questions)
-            embed = discord.Embed(title="🧠 Trivia Time!", description=q["question"], color=0x38bdf8)
+            embed = discord.Embed(title="Trivia Time!", description=q["question"], color=0x38bdf8)
             embed.add_field(name="Options", value="\n".join(q["options"]), inline=False)
             embed.set_footer(text="Reply with A, B, C, or D")
 
@@ -327,26 +327,123 @@ class FastBot:
             try:
                 msg = await self.bot.wait_for("message", check=check, timeout=20.0)
                 if msg.content.upper() == q["answer"]:
-                    await ctx.send("✅ Correct!")
+                    await ctx.send("Correct!")
                     self.scores[msg.author.name] = self.scores.get(msg.author.name, 0) + 1
                 else:
-                    await ctx.send(f"❌ Wrong! The correct answer was {q['answer']}")
+                    await ctx.send(f"Wrong! The correct answer was {q['answer']}")
             except:
-                await ctx.send("⌛ Time's up!")
+                await ctx.send("Time's up!")
 
         @self.bot.command()
         async def trivia_score(ctx):
             score = self.scores.get(ctx.author.name, 0)
-            await ctx.send(f"🎯 {ctx.author.name}, your score is **{score}**.")
+            await ctx.send(f"{ctx.author.name}, your score is **{score}**.")
 
         @self.bot.command()
         async def trivia_leaderboard(ctx):
             if not self.scores:
-                await ctx.send("📉 No scores yet.")
+                await ctx.send("No scores yet.")
                 return
             sorted_scores = sorted(self.scores.items(), key=lambda x: x[1], reverse=True)
-            leaderboard = "\n".join([f"🏅 {user}: {score}" for user, score in sorted_scores[:5]])
-            await ctx.send(f"📊 **Leaderboard**\n{leaderboard}")
+            leaderboard = "\n".join([f"{user}: {score}" for user, score in sorted_scores[:5]])
+            await ctx.send(f"**Leaderboard**\n{leaderboard}")
+
+    def custom_info_command(self, provider='groq', data_path='data.txt'):
+        """
+        AI command that answers based on specific information from data.txt.
+
+        This command allows the bot to answer user questions using custom knowledge
+        stored in a text file (data.txt). The bot will search for the most relevant
+        information in the file and use it as context for the AI (OpenAI or Groq)
+        to generate a more accurate and specific response.
+        """
+        import os
+        from difflib import get_close_matches
+
+        def load_knowledge(filename):
+            """
+            Reads the knowledge base from a text file and splits it into entries.
+
+            Each entry is separated by two newlines (\n\n) and can be a paragraph,
+            list, or any custom information.
+
+            Returns:
+                List[str]: A list of knowledge entries.
+            """
+            if not os.path.exists(filename):
+                return []
+            with open(filename, 'r', encoding='utf-8') as f:
+                entries = f.read().split('\n\n')
+            return entries
+
+        def find_relevant_info(question, entries):
+            """
+            Finds the most relevant knowledge entries for the user's question.
+
+            Uses fuzzy matching to select up to 2 entries that are most similar
+            to the user's question.
+
+            Returns:
+                str: The most relevant knowledge entries joined as a single string,
+                     or an empty string if no match is found.
+            """
+            matches = get_close_matches(question, entries, n=2, cutoff=0.2)
+            return '\n'.join(matches) if matches else ''
+
+        @self.bot.command(name='infospesifik')
+        async def infospesifik(ctx, *, question):
+            """
+            Discord command: !infospesifik <question>
+            Answers the user's question using custom knowledge from data.txt,
+            with the help of OpenAI or Groq for natural language generation.
+            """
+            entries = load_knowledge(data_path)
+            context = find_relevant_info(question, entries)
+            if context:
+                prompt = (
+                    f"Use the following information to answer the user's question:\n"
+                    f"{context}\n\n"
+                    f"Question: {question}\n"
+                    f"Answer clearly and specifically."
+                )
+            else:
+                prompt = (
+                    f"Question: {question}\n"
+                    f"Answer clearly and specifically."
+                )
+
+            if provider == 'openai':
+                try:
+                    import openai
+                    openai.api_key = self.ai_providers[provider]['api_key']
+                    response = await openai.ChatCompletion.acreate(
+                        model=self.ai_providers[provider]['model'] or 'gpt-3.5-turbo',
+                        messages=[
+                            {"role": "system", "content": "You are a friendly and informative Discord assistant."},
+                            {"role": "user", "content": prompt}
+                        ]
+                    )
+                    await ctx.send(response.choices[0].message.content)
+                except Exception as e:
+                    await ctx.send(f"An error occurred with OpenAI: {e}")
+            elif provider == 'groq':
+                try:
+                    from groq import Groq
+                    client = Groq(api_key=self.ai_providers[provider]['api_key'])
+                    chat_completion = client.chat.completions.create(
+                        messages=[
+                            {"role": "system", "content": "You are a friendly and informative Discord assistant."},
+                            {"role": "user", "content": prompt}
+                        ],
+                        model=self.ai_providers[provider]['model'] or "llama-3.3-70b-versatile",
+                        temperature=0.5,
+                        max_completion_tokens=1024
+                    )
+                    await ctx.send(chat_completion.choices[0].message.content)
+                except Exception as e:
+                    await ctx.send(f"An error occurred with Groq: {e}")
+            else:
+                await ctx.send("AI provider not supported. Use 'openai' or 'groq'.")
 
     def run(self):
         """
