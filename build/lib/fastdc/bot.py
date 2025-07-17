@@ -111,7 +111,6 @@ class FastBot:
             
             categories = {
                 "AI Commands": ["ai", "askbot"],
-                "Games": ["trivia", "trivia_score", "trivia_leaderboard"],
                 "Welcome": ["welcome", "leave"],
                 "Utility": ["ping", "serverinfo"]
             }
@@ -126,12 +125,14 @@ class FastBot:
             await ctx.send(embed=embed)
 
     def add_moderation_commands(self):
-        """Add basic moderation commands"""
+        """
+        Add basic moderation commands for kick, ban and clear message
+        """
         @self.bot.command()
         @commands.has_permissions(kick_members=True)
         async def kick(ctx, member: discord.Member, *, reason=None):
             await member.kick(reason=reason)
-            await ctx.send(f"👢 {member.name} has been kicked. Reason: {reason}")
+            await ctx.send(f"{member.name} has been kicked. Reason: {reason}")
 
         @self.bot.command()
         @commands.has_permissions(ban_members=True)
@@ -146,7 +147,10 @@ class FastBot:
             await ctx.send(f"Cleared {amount} messages.", delete_after=5)
 
     def add_utility_commands(self):
-        """Add utility commands"""
+        """
+        Add utility commands for ping and server info
+        
+        """
         @self.bot.command()
         async def ping(ctx):
             latency = round(self.bot.latency * 1000)
@@ -203,11 +207,17 @@ class FastBot:
                 await message.channel.send(response)
             await self.bot.process_commands(message)
             
-    def welcome_member(self, message = "Hello {member}, welcome to Server!"):
+    def welcome_member(self, message : str = "Hello {member}, welcome to Server!"):
         
         """
             Sends a welcome message to new members who join the Discord server.
             The message is sent in the server's system channel if it exists.
+            
+            Parameters:
+            ----------
+            message : str
+                Format messagee for member join the channel
+            
         """
         
         @self.bot.event
@@ -231,11 +241,17 @@ class FastBot:
             if channel:
                 await channel.send(f"{message_welcome}")
                 
-    def leave_member(self, message = "{member} has left the server"):
+    def leave_member(self, message : str = "{member} has left the server"):
         
         """
-            Sends a farewell message to the system channel (or first accessible channel) 
+            Sends a leave message to the system channel
             when a member leaves the server.
+            
+            Parameters:
+            ----------
+            message : str
+                Format messagee for member leaving the channel
+            
         """
         
         @self.bot.event
@@ -269,62 +285,102 @@ class FastBot:
             response = self.trainer.get_response(message)
             await ctx.send(response)
             
-    def trivia_game(self, json_path="trivia_questions.json"):
-        
+    def custom_info_command(self, provider='groq', data_path='data.txt'):
         """
-        Adds a trivia game command with categories, score tracking, and leaderboard.
-        Questions are loaded from a JSON file.
+        AI command that answers based on specific information from data.txt.
+
+        This command allows the bot to answer user questions using custom knowledge
+        stored in a text file (data.txt). The bot will search for the most relevant
+        information in the file and use it as context for the AI (OpenAI or Groq)
+        to generate a more accurate and specific response.
         """
-        self.scores = {}
-        with open(json_path, "r") as file:
-            all_questions = json.load(file)
+        import os
+        from difflib import get_close_matches
 
-        @self.bot.command()
-        async def trivia(ctx, category=None):
-            questions = all_questions
-            if category:
-                questions = [q for q in all_questions if q["category"].lower() == category.lower()]
-                if not questions:
-                    await ctx.send("No questions found in that category.")
-                    return
+        def load_knowledge(filename):
+            """
+            Reads the knowledge base from a text file and splits it into entries.
 
-            q = random.choice(questions)
-            embed = discord.Embed(title="🧠 Trivia Time!", description=q["question"], color=0x38bdf8)
-            embed.add_field(name="Options", value="\n".join(q["options"]), inline=False)
-            embed.set_footer(text="Reply with A, B, C, or D")
+            Each entry is separated by two newlines (\n\n) and can be a paragraph,
+            list, or any custom information.
 
-            await ctx.send(embed=embed)
+            Returns:
+                List[str]: A list of knowledge entries.
+            """
+            if not os.path.exists(filename):
+                return []
+            with open(filename, 'r', encoding='utf-8') as f:
+                entries = f.read().split('\n\n')
+            return entries
 
-            def check(m):
-                return (
-                    m.author == ctx.author
-                    and m.channel == ctx.channel
-                    and m.content.upper() in ["A", "B", "C", "D"]
+        def find_relevant_info(question, entries):
+            """
+            Finds the most relevant knowledge entries for the user's question.
+
+            Uses fuzzy matching to select up to 2 entries that are most similar
+            to the user's question.
+
+            Returns:
+                str: The most relevant knowledge entries joined as a single string,
+                     or an empty string if no match is found.
+            """
+            matches = get_close_matches(question, entries, n=2, cutoff=0.2)
+            return '\n'.join(matches) if matches else ''
+
+        @self.bot.command(name='infospesifik')
+        async def infospesifik(ctx, *, question):
+            """
+            Discord command: !infospesifik <question>
+            Answers the user's question using custom knowledge from data.txt,
+            with the help of OpenAI or Groq for natural language generation.
+            """
+            entries = load_knowledge(data_path)
+            context = find_relevant_info(question, entries)
+            if context:
+                prompt = (
+                    f"Use the following information to answer the user's question:\n"
+                    f"{context}\n\n"
+                    f"Question: {question}\n"
+                    f"Answer clearly and specifically."
+                )
+            else:
+                prompt = (
+                    f"Question: {question}\n"
+                    f"Answer clearly and specifically."
                 )
 
-            try:
-                msg = await self.bot.wait_for("message", check=check, timeout=20.0)
-                if msg.content.upper() == q["answer"]:
-                    await ctx.send("✅ Correct!")
-                    self.scores[msg.author.name] = self.scores.get(msg.author.name, 0) + 1
-                else:
-                    await ctx.send(f"❌ Wrong! The correct answer was {q['answer']}")
-            except:
-                await ctx.send("⌛ Time's up!")
-
-        @self.bot.command()
-        async def trivia_score(ctx):
-            score = self.scores.get(ctx.author.name, 0)
-            await ctx.send(f"🎯 {ctx.author.name}, your score is **{score}**.")
-
-        @self.bot.command()
-        async def trivia_leaderboard(ctx):
-            if not self.scores:
-                await ctx.send("📉 No scores yet.")
-                return
-            sorted_scores = sorted(self.scores.items(), key=lambda x: x[1], reverse=True)
-            leaderboard = "\n".join([f"🏅 {user}: {score}" for user, score in sorted_scores[:5]])
-            await ctx.send(f"📊 **Leaderboard**\n{leaderboard}")
+            if provider == 'openai':
+                try:
+                    import openai
+                    openai.api_key = self.ai_providers[provider]['api_key']
+                    response = await openai.ChatCompletion.acreate(
+                        model=self.ai_providers[provider]['model'] or 'gpt-3.5-turbo',
+                        messages=[
+                            {"role": "system", "content": "You are a friendly and informative Discord assistant."},
+                            {"role": "user", "content": prompt}
+                        ]
+                    )
+                    await ctx.send(response.choices[0].message.content)
+                except Exception as e:
+                    await ctx.send(f"An error occurred with OpenAI: {e}")
+            elif provider == 'groq':
+                try:
+                    from groq import Groq
+                    client = Groq(api_key=self.ai_providers[provider]['api_key'])
+                    chat_completion = client.chat.completions.create(
+                        messages=[
+                            {"role": "system", "content": "You are a friendly and informative Discord assistant."},
+                            {"role": "user", "content": prompt}
+                        ],
+                        model=self.ai_providers[provider]['model'] or "llama-3.3-70b-versatile",
+                        temperature=0.5,
+                        max_completion_tokens=1024
+                    )
+                    await ctx.send(chat_completion.choices[0].message.content)
+                except Exception as e:
+                    await ctx.send(f"An error occurred with Groq: {e}")
+            else:
+                await ctx.send("AI provider not supported. Use 'openai' or 'groq'.")
 
     def run(self):
         """

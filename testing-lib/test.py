@@ -37,8 +37,8 @@ def main():
     # Train the bot from data_train.txt
     bot.train_bot()
     
+    # Train ai with more data
     bot.custom_info_command(data_path="data.txt")
-
 
     # Setup welcome and leave messages
     bot.welcome_member()

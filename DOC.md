@@ -50,6 +50,9 @@ bot.auto_reply(trigger="hi", response="Hello!")
 # Train the bot from a local file
 bot.train_bot()  
 
+# Train ai with more data
+bot.custom_info_command(data_path="data.txt")
+
 # Welcome and leave notifications
 """
 If {member} is not included in the message, the bot will use the default welcome message.
