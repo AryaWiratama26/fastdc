@@ -8,7 +8,7 @@
 </p>
 
 
-**FastDC** is a library designed to make creating Discord bots easier. FastDC has been downloaded over 2,000 times according to [Pepy statistics](https://pepy.tech/projects/fastdc)
+**FastDC** is a library designed to make creating Discord bots easier. FastDC has been downloaded over 2,000 times according to [Pepy statistics](https://pepy.tech/projects/fastdc).
 
 ---
 
