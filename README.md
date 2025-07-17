@@ -66,9 +66,6 @@ bot.auto_reply(trigger="hi", response="Hello!")
 # Train the bot from a local file
 bot.train_bot()  
 
-# Trivia bot from json
-bot.trivia_game(json_path="questions.json")
-
 # Welcome and leave notifications
 """
 If {member} is not included in the message, the bot will use the default welcome message.
@@ -93,12 +90,6 @@ bot.run()
 | `!ai {prompt}`     | Interact with AI using configured provider (Groq/OpenAI)  |
 | `!askbot {question}` | Ask a question based on trained data                     |
 
-### Games
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!trivia`          | Start trivia game                                        |
-| `!trivia_score`    | Show trivia score                                        |
-| `!trivia_leaderboard` | Show trivia leaderboard                              |
 
 ### Moderation
 | Command            | Description                                              |
