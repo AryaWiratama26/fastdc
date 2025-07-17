@@ -39,8 +39,6 @@ def main():
     
     bot.custom_info_command(data_path="data.txt")
 
-    # Setup trivia game
-    bot.trivia_game(json_path="questions.json")
 
     # Setup welcome and leave messages
     bot.welcome_member()
