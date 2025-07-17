@@ -3,7 +3,8 @@
   <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
 </p>
 
-**FastDC** is a library designed to make creating Discord bots easier.
+**FastDC** is a library designed to make creating Discord bots easier. FastDC has been downloaded over 2,000 times according to [Pepy statistics](https://pepy.tech/projects/fastdc).
+
 
 ---
 
