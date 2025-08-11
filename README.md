@@ -80,7 +80,14 @@ bot.welcome_member(message="Helloww, welcome {member}")
 bot.leave_member(message="Goodbye {member}")
 
 # Run the bot
-bot.run()
+
+"""
+On this method you can give a message when bot is running. If {bot} is not included in message, the bot will use the default message
+
+Default Message = "{bot} Ready to Use!"
+
+"""
+bot.run(message_run="si {bot} ready")
 ```
 
 ---
