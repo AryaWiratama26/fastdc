@@ -45,7 +45,7 @@ def main():
     bot.leave_member()
 
     # Run the bot
-    bot.run()
+    bot.run(message_run="si {bot} ready")
 
 if __name__ == "__main__":
     main()
