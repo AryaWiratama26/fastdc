@@ -382,9 +382,25 @@ class FastBot:
             else:
                 await ctx.send("AI provider not supported. Use 'openai' or 'groq'.")
 
-    def run(self):
+    def run(self, message_run):
         """
             Starts the Discord bot using the provided token.
         """
+        
+        @self.bot.event
+        async def on_ready():
+            
+            
+            name_of_bot = str(self.bot.user)
+            
+            if "{bot}" in message_run:
+                res = message_run.replace("{bot}", name_of_bot)
+            else:
+                res = f"{name_of_bot} Ready to Use!"
+                
+            print(res)
+            
+            
+
         self.bot.run(self.token)
                     
