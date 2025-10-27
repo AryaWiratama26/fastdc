@@ -5,7 +5,7 @@ with open('DOC.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='fastdc',
-    version='1.8',
+    version='1.9',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
     description='Fastdc is a library designed to make creating Discord bots easier.',

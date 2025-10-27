@@ -1,11 +1,9 @@
 import discord
 from discord.ext import commands
-from .trainer import FastdcTrainer
 import random
 import json
 import asyncio
 from typing import Optional, Dict, List, Union
-import aiohttp
 import logging
 from datetime import datetime, timedelta
 
@@ -13,8 +11,6 @@ class FastBot:
     def __init__(self, token: str, prefix: str = "!"):
         self.token = token
         self.bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
-        self.trainer = FastdcTrainer()
-        self.trainer.train()
         self.ai_providers = {}
         self.command_cooldowns = {}
         self.logger = logging.getLogger('fastdc')
@@ -163,6 +159,7 @@ class FastBot:
             embed.add_field(name="Server ID", value=guild.id)
             embed.add_field(name="Created On", value=guild.created_at.strftime("%Y-%m-%d"))
             embed.add_field(name="Member Count", value=guild.member_count)
+            
             embed.add_field(name="Channel Count", value=len(guild.channels))
             embed.set_thumbnail(url=guild.icon.url if guild.icon else None)
             await ctx.send(embed=embed)
@@ -354,6 +351,7 @@ class FastBot:
                     import openai
                     openai.api_key = self.ai_providers[provider]['api_key']
                     response = await openai.ChatCompletion.acreate(
+
                         model=self.ai_providers[provider]['model'] or 'gpt-3.5-turbo',
                         messages=[
                             {"role": "system", "content": "You are a friendly and informative Discord assistant."},
@@ -362,7 +360,9 @@ class FastBot:
                     )
                     await ctx.send(response.choices[0].message.content)
                 except Exception as e:
+
                     await ctx.send(f"An error occurred with OpenAI: {e}")
+
             elif provider == 'groq':
                 try:
                     from groq import Groq
