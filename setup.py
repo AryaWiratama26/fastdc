@@ -12,7 +12,6 @@ setup(
     long_description=res,
     long_description_content_type="text/markdown",
     packages=find_packages(),
-    package_data={"fastdc": ["*.py"]},
     install_requires=[
         'discord.py>=2.3.0',
         'groq>=0.3.0',
