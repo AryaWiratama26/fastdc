@@ -5,10 +5,10 @@ with open('DOC.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='fastdc',
-    version='1.9',
+    version='2.2.0',
     author='Arya Wiratama',
     author_email='aryawiratama2401@gmail.com',
-    description='Fastdc is a library designed to make creating Discord bots easier.',
+    description='A Fast Discord Bot Framework',
     long_description=res,
     long_description_content_type="text/markdown",
     packages=find_packages(),
@@ -19,10 +19,16 @@ setup(
         'openai>=1.0.0',
         'aiohttp>=3.8.0',
         'python-dotenv>=1.0.0',
-        'chatterbot>=1.0.0',
-        'chatterbot-corpus>=1.2.0',
-        'SQLAlchemy>=2.0.0',
-        'spacy>=3.0.0', 
+        'quart>=0.19.0',
+        'hypercorn>=0.17.0',
     ],
+    package_data={
+        "fastdc": [
+            "*.py",
+            "dashboard/templates/*.html",
+            "dashboard/static/*.css",
+            "dashboard/static/*.js",
+        ]
+    },
     python_requires='>=3.10',
 )

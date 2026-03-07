@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastDC — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-left">
+            <h1 class="logo">FastDC</h1>
+        </div>
+        <div class="topbar-right">
+            <div class="bot-indicator">
+                <span class="status-dot"></span>
+                <span class="bot-name" id="botName">Loading...</span>
+            </div>
+            <a href="/logout" class="logout-btn">Sign Out</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Servers</span>
+                    <span class="stat-value" id="statGuilds">--</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Members</span>
+                    <span class="stat-value" id="statMembers">--</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Latency</span>
+                    <span class="stat-value" id="statLatency">--</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Prefix</span>
+                    <span class="stat-value" id="statPrefix">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 1: AI + Prefix + Anti-Spam + Leveling -->
+        <section class="section">
+            <h2 class="section-title">Settings</h2>
+            <div class="settings-grid settings-grid-4">
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>AI Provider</h3>
+                        <span class="badge badge-on" id="badgeAI">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Provider</label>
+                            <select id="inputAIProvider" class="input-sm input-wide"></select>
+                        </div>
+                        <div class="setting-row">
+                            <label>Model</label>
+                            <input type="text" id="inputAIModel" class="input-sm input-wide" placeholder="default">
+                        </div>
+                        <div class="setting-row">
+                            <label>Context File</label>
+                            <input type="text" id="inputAIContext" class="input-sm input-wide" placeholder="none">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateAI()">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Command Prefix</h3>
+                    </div>
+                    <div class="setting-body">
+                        <div class="inline-form">
+                            <input type="text" id="inputPrefix" class="input-sm" value="!" maxlength="3">
+                            <button class="btn btn-sm" onclick="updatePrefix()">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Anti-Spam</h3>
+                        <span class="badge" id="badgeAntispam">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Max Messages</label>
+                            <input type="number" id="inputSpamMax" class="input-sm" value="5" min="2" max="50">
+                        </div>
+                        <div class="setting-row">
+                            <label>Interval (sec)</label>
+                            <input type="number" id="inputSpamInterval" class="input-sm" value="5" min="1" max="60">
+                        </div>
+                        <div class="setting-row">
+                            <label>Action</label>
+                            <select id="inputSpamAction" class="input-sm input-wide">
+                                <option value="warn">Warn</option>
+                                <option value="mute">Mute</option>
+                                <option value="kick">Kick</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateAntiSpam()">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Leveling</h3>
+                        <span class="badge" id="badgeLeveling">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>XP per Message</label>
+                            <input type="number" id="inputXP" class="input-sm" value="15" min="1" max="100">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateLeveling()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 2: Presence + Welcome + Leave + Auto Role -->
+        <section class="section">
+            <h2 class="section-title">Bot & Events</h2>
+            <div class="settings-grid settings-grid-4">
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Presence</h3>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Status</label>
+                            <select id="inputPresenceStatus" class="input-sm input-wide">
+                                <option value="online">Online</option>
+                                <option value="idle">Idle</option>
+                                <option value="dnd">DND</option>
+                                <option value="invisible">Invisible</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <label>Activity</label>
+                            <select id="inputPresenceType" class="input-sm input-wide">
+                                <option value="playing">Playing</option>
+                                <option value="watching">Watching</option>
+                                <option value="listening">Listening</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <label>Name</label>
+                            <input type="text" id="inputPresenceName" class="input-sm input-wide" value="FastDC Bot">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updatePresence()">Apply</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Welcome Message</h3>
+                        <span class="badge" id="badgeWelcome">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <input type="text" id="inputWelcomeMsg" class="input" placeholder="Hello {member}, welcome!">
+                        <button class="btn btn-sm btn-full" onclick="updateWelcome()">Save</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Leave Message</h3>
+                        <span class="badge" id="badgeLeave">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <input type="text" id="inputLeaveMsg" class="input" placeholder="{member} has left">
+                        <button class="btn btn-sm btn-full" onclick="updateLeave()">Save</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Auto Role</h3>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Role ID</label>
+                            <input type="text" id="inputAutoRole" class="input-sm input-wide" placeholder="none">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateAutoRole()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 3: Starboard + Temp Voice -->
+        <section class="section">
+            <div class="settings-grid settings-grid-2">
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Starboard</h3>
+                        <span class="badge" id="badgeStarboard">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Channel ID</label>
+                            <input type="text" id="inputStarChannel" class="input-sm input-wide" placeholder="none">
+                        </div>
+                        <div class="setting-row">
+                            <label>Emoji</label>
+                            <input type="text" id="inputStarEmoji" class="input-sm" value="&star;" maxlength="2">
+                        </div>
+                        <div class="setting-row">
+                            <label>Threshold</label>
+                            <input type="number" id="inputStarThreshold" class="input-sm" value="3" min="1" max="50">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateStarboard()">Save</button>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <h3>Temp Voice</h3>
+                        <span class="badge" id="badgeTempVoice">--</span>
+                    </div>
+                    <div class="setting-body">
+                        <div class="setting-row">
+                            <label>Trigger Channel ID</label>
+                            <input type="text" id="inputTempVoice" class="input-sm input-wide" placeholder="none">
+                        </div>
+                        <button class="btn btn-sm btn-full" onclick="updateTempVoice()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Commands + Auto Replies -->
+        <div class="two-col">
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Custom Commands</h2>
+                    <button class="btn btn-sm" onclick="toggleAddCmd()">Add</button>
+                </div>
+                <div class="add-form" id="addCmdForm" style="display:none;">
+                    <input type="text" id="cmdName" class="input" placeholder="Command name">
+                    <input type="text" id="cmdResponse" class="input" placeholder="Response message">
+                    <button class="btn btn-sm" onclick="addCommand()">Create</button>
+                </div>
+                <div class="list" id="commandsList">
+                    <div class="empty-state">No custom commands yet.</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Auto Replies</h2>
+                    <button class="btn btn-sm" onclick="toggleAddReply()">Add</button>
+                </div>
+                <div class="add-form" id="addReplyForm" style="display:none;">
+                    <input type="text" id="replyTrigger" class="input" placeholder="Trigger word">
+                    <input type="text" id="replyResponse" class="input" placeholder="Response message">
+                    <button class="btn btn-sm" onclick="addAutoReply()">Create</button>
+                </div>
+                <div class="list" id="repliesList">
+                    <div class="empty-state">No auto replies configured.</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Leaderboard + Logs -->
+        <div class="two-col">
+            <section class="section">
+                <h2 class="section-title">Leaderboard</h2>
+                <div class="list" id="leaderboardList">
+                    <div class="empty-state">No activity yet.</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Activity Log</h2>
+                    <div style="display:flex;gap:6px;">
+                        <button class="btn btn-sm" onclick="saveData()">Save Data</button>
+                        <button class="btn btn-sm btn-ghost" onclick="loadLogs()">Refresh</button>
+                    </div>
+                </div>
+                <div class="list log-list" id="logsList">
+                    <div class="empty-state">No logs yet.</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

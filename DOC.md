@@ -1,165 +1,83 @@
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
   <img src="https://img.shields.io/pypi/dm/fastdc" alt="PyPI - Downloads" />
+  <img src="https://github.com/AryaWiratama26/fastdc/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline" />
+  <img src="https://github.com/AryaWiratama26/fastdc/actions/workflows/publish.yml/badge.svg" alt="Publish to PyPI" />
 </p>
 
-**FastDC** is a library designed to make creating Discord bots easier. FastDC has been downloaded over 2,000 times according to [Pepy statistics](https://pepy.tech/projects/fastdc).
-
+**FastDC** — A powerful library for creating Discord bots quickly. All commands have **prefix** + **slash** support.
 
 ---
 
 ## Installation
 
-Install FastDC via pip:
-
 ```bash
 pip install fastdc
 ```
-
----
 
 ## Quick Start
 
 ```python
 from fastdc import FastBot
 
-
-"""
-- Default prefix = '!'
-"""
-bot = FastBot(token="YOUR_DISCORD_TOKEN")
-
-# Setup AI, You can use groq or openai
-
-""""
-- Default model for groq = 'llama-3.3-70b-versatile'
-- Default model for open ai = 'gpt-3.5-turbo'
-"""
-bot.add_ai_provider("groq", "YOUR_GROQ_API_KEY")
-bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
-
-# Enable AI 
-bot.ai_chat(provider="groq")  # or u can use openai
-
-# Setup command categories and help system
+bot = FastBot(token="YOUR_TOKEN")
+bot.add_ai_provider("groq", "API_KEY")
+bot.ai_chat(provider="groq")
 bot.setup_command_categories()
-
-# Add moderation commands
 bot.add_moderation_commands()
-
-# Add utility commands
 bot.add_utility_commands()
-
-# Setup event logging
+bot.add_poll_commands()
+bot.add_ticket_system()
+bot.add_giveaway_commands()
+bot.add_reminder_commands()
+bot.add_custom_commands()
+bot.enable_leveling()
+bot.enable_afk_system()
 bot.setup_event_logging()
-
-# Auto-reply
 bot.auto_reply(trigger="hi", response="Hello!")
-
-# Welcome and leave notifications
-"""
-If {member} is not included in the message, the bot will use the default welcome message.
-
-Default Welcome Message = "Hello {member}, welcome to Server!"
-Default Leave Message = "{member} has left the server"
-"""
-bot.welcome_member(message="Helloww, welcome {member}")
-bot.leave_member(message="Goodbye {member}")
-
-# Run the bot
-
-"""
-On this method you can give a message when bot is running. If {bot} is not included in message, the bot will use the default message
-
-Default Message = "{bot} Ready to Use!"
-
-"""
-bot.run(message_run="si {bot} ready")
-```
-
----
-
-## Discord Commands
-
-### AI Commands
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!ai {prompt}`     | Interact with AI using configured provider (Groq/OpenAI)  |
-| `!askbot {question}` | Ask a question based on trained data                     |
-
-### Moderation
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!kick @user [reason]` | Kick a user from the server                          |
-| `!ban @user [reason]`  | Ban a user from the server                           |
-| `!clear [amount]`      | Clear specified number of messages                    |
-
-### Utility
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!ping`            | Check bot latency                                        |
-| `!serverinfo`      | Display server information                              |
-| `!bothelp`         | Show help menu with all commands                        |
-
----
-
-## Discord Bot Token Setup
-
-To create your bot, follow these steps:
-
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
-2. Create a new application and add a bot.
-3. Enable all **Privileged Gateway Intents**.
----
-
-## AI Integration
-
-FastDC supports multiple AI providers:
-
-### Groq
-- Visit [Groq Console](https://console.groq.com/)
-- Sign in and generate your API key
-
-### OpenAI
-- Visit [OpenAI Platform](https://platform.openai.com/)
-- Create an account and generate your API key
-
----
-
-## Training Your Bot
-
-The `train_bot()` method allows your bot to respond based on your own dataset.  
-Simply create a file named `data_train.txt` in your project root with Q&A pairs.
-
-**Example format**:
-```
-What is FastDC?
-FastDC is a Python library for creating Discord bots quickly.
-```
-
----
-
-## Member Join & Leave Events
-
-Welcome and leave message
-
-```python
 bot.welcome_member()
 bot.leave_member()
+bot.enable_anti_spam(max_messages=5, interval=5, action="warn")
+bot.set_presence(activity_type="playing", activity_name="FastDC")
+bot.run()
 ```
 
-## Event Logging
+## Commands
 
-FastDC includes a built-in logging system that tracks:
-- Command usage
-- Errors and exceptions
-- Bot events
-- AI interactions
+| Command | Description |
+|---|---|
+| `!ai` `/ai` | AI chat |
+| `!kick` `!ban` `!clear` | Moderation |
+| `!ping` `!serverinfo` `!bothelp` | Utility |
+| `!poll` `/poll` | Polls |
+| `!ticket` `!close` | Tickets |
+| `!giveaway` `/giveaway` | Giveaways |
+| `!remind` `/remind` | Reminders |
+| `!addcmd` `!delcmd` `!listcmds` | Custom commands |
+| `!rank` `!leaderboard` | Leveling |
+| `!afk` `/afk` | AFK status |
+| `!rolepanel` `/rolepanel` | Button roles |
 
-Logs are formatted and can be easily integrated with your preferred logging system.
+## Features
 
----
+- **AI** — Groq + OpenAI with optional knowledge context
+- **Giveaway** — Timed with random winner
+- **Reminder** — DM after delay
+- **Custom Commands** — Admin creates/deletes at runtime
+- **Leveling** — XP per message, rank card, leaderboard
+- **AFK** — Status + auto-notify on mention
+- **Starboard** — Popular messages reposted
+- **Temp Voice** — Auto-create/delete VCs
+- **Button Roles** — Discord component role picker
+- **Anti-Spam** — Mute/kick/warn on spam
+- **Embed Builder** — QuickEmbed helpers
+- **Paginator** — Multi-page embeds with buttons
+- **Scheduler** — Delayed messages
 
-## Note : 
-- This project will be updated regularly with new features and improvements
----
+## Setup
+
+1. [Discord Developer Portal](https://discord.com/developers/applications)
+2. **Groq**: [console.groq.com](https://console.groq.com/) | **OpenAI**: [platform.openai.com](https://platform.openai.com/)
+
+## License
+[MIT](LICENSE)

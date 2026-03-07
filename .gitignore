@@ -14,3 +14,12 @@ db.sqlite3-wal
 # Txt
 data.txt
 data_train.txt
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Database
+db.sqlite3
+db.sqlite3-journal
+fastdc_data.json

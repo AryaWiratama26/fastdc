@@ -5,16 +5,15 @@
 <p align="center">
   <img src="https://img.shields.io/pypi/v/fastdc" alt="PyPI - Version" />
   <img src="https://static.pepy.tech/badge/fastdc" alt="PyPI - Downloads" />
+  <img src="https://github.com/AryaWiratama26/fastdc/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline" />
+  <img src="https://github.com/AryaWiratama26/fastdc/actions/workflows/publish.yml/badge.svg" alt="Publish to PyPI" />
 </p>
 
-
-**FastDC** is a library designed to make creating Discord bots easier. FastDC has been downloaded over 2,000 times according to [Pepy statistics](https://pepy.tech/projects/fastdc).
+**FastDC** is a powerful library for creating Discord bots quickly. All commands support both **prefix** and **slash** variants.
 
 ---
 
 ## Installation
-
-Install FastDC via pip:
 
 ```bash
 pip install fastdc
@@ -27,175 +26,170 @@ pip install fastdc
 ```python
 from fastdc import FastBot
 
-
-"""
-- Default prefix = '!'
-"""
 bot = FastBot(token="YOUR_DISCORD_TOKEN")
 
-# Setup AI, You can use groq or openai
-
-""""
-- Default model for groq = 'llama-3.3-70b-versatile'
-- Default model for open ai = 'gpt-3.5-turbo'
-"""
+# AI (Groq or OpenAI)
 bot.add_ai_provider("groq", "YOUR_GROQ_API_KEY")
-bot.add_ai_provider("openai", "YOUR_OPENAI_API_KEY")
+bot.ai_chat(provider="groq", context_file="data.txt")
 
-# Enable AI 
-bot.ai_chat(provider="groq")  # or u can use openai
-
-# Setup command categories and help system
+# Commands
 bot.setup_command_categories()
+bot.add_moderation_commands()      # kick, ban, clear
+bot.add_utility_commands()         # ping, serverinfo
+bot.add_poll_commands()            # poll with emoji voting
+bot.add_ticket_system()            # support tickets
+bot.add_giveaway_commands()        # timed giveaways
+bot.add_reminder_commands()        # DM reminders
+bot.add_custom_commands()          # admin-created commands
+bot.enable_leveling()              # XP system + leaderboard
+bot.enable_afk_system()            # AFK status
 
-# Add moderation commands
-bot.add_moderation_commands()
-
-# Add utility commands
-bot.add_utility_commands()
-
-# Setup event logging
+# Events
 bot.setup_event_logging()
-
-# Auto-reply
 bot.auto_reply(trigger="hi", response="Hello!")
-
-
-# Welcome and leave notifications
-"""
-If {member} is not included in the message, the bot will use the default welcome message.
-
-Default Welcome Message = "Hello {member}, welcome to Server!"
-Default Leave Message = "{member} has left the server"
-"""
-bot.welcome_member(message="Helloww, welcome {member}")
-bot.leave_member(message="Goodbye {member}")
-
-# Run the bot
-
-"""
-On this method you can give a message when bot is running. If {bot} is not included in message, the bot will use the default message
-
-Default Message = "{bot} Ready to Use!"
-
-"""
-bot.run(message_run="si {bot} ready")
-```
-
----
-
-## Discord Commands
-
-### AI Commands
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!ai {prompt}`     | Interact with AI using configured provider (Groq/OpenAI)  |
-| `!askbot {question}` | Ask a question based on trained data                     |
-
-
-### Moderation
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!kick @user [reason]` | Kick a user from the server                          |
-| `!ban @user [reason]`  | Ban a user from the server                           |
-| `!clear [amount]`      | Clear specified number of messages                    |
-
-### Utility
-| Command            | Description                                              |
-|--------------------|----------------------------------------------------------|
-| `!ping`            | Check bot latency                                        |
-| `!serverinfo`      | Display server information                              |
-| `!bothelp`         | Show help menu with all commands                        |
-
----
-
-## Discord Bot Token Setup
-
-To create your bot, follow these steps:
-
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
-2. Create a new application and add a bot.
-3. Enable all **Privileged Gateway Intents**.
-
-   ![Enable Intents](/doc-ss/intents.png)
-
----
-
-## AI Integration
-
-FastDC supports multiple AI providers:
-
-### Groq
-- Visit [Groq Console](https://console.groq.com/)
-- Sign in and generate your API key
-
-### OpenAI
-- Visit [OpenAI Platform](https://platform.openai.com/)
-- Create an account and generate your API key
-
----
-
-## Training Your Bot
-
-The `train_bot()` method allows your bot to respond based on your own dataset.  
-Simply create a file named `data_train.txt` in your project root with Q&A pairs.
-
-**Example format**:
-```
-What is FastDC?
-FastDC is a Python library for creating Discord bots quickly.
-```
-
----
-
-## Member Join & Leave Events
-
-Welcome and leave message
-
-```python
 bot.welcome_member()
 bot.leave_member()
+bot.enable_anti_spam(max_messages=5, interval=5, action="warn")
+
+# Presence
+bot.set_presence(activity_type="playing", activity_name="FastDC Bot")
+
+bot.run()
 ```
-
-These functions send automatic messages to the **system channel** when members join or leave the server:
-
-- `welcome_member()` → `"Hello {username}, Welcome to Server!"`
-- `leave_member()` → `"{username} has left the server"`
 
 ---
 
-## Event Logging
+## All Commands
 
-FastDC includes a built-in logging system that tracks:
-- Command usage
-- Errors and exceptions
-- Bot events
-- AI interactions
+| Command | Description |
+|---|---|
+| `!ai` / `/ai` | Chat with AI |
+| `!kick` / `/kick` | Kick member |
+| `!ban` / `/ban` | Ban member |
+| `!clear` / `/clear` | Clear messages |
+| `!ping` / `/ping` | Check latency |
+| `!serverinfo` / `/serverinfo` | Server info |
+| `!bothelp` / `/help` | Help menu |
+| `!poll` / `/poll` | Create polls |
+| `!ticket` / `/ticket` | Create support ticket |
+| `!close` / `/close` | Close ticket |
+| `!giveaway` / `/giveaway` | Start a giveaway |
+| `!remind` / `/remind` | Set a reminder |
+| `!addcmd` / `/addcmd` | Create custom command |
+| `!delcmd` / `/delcmd` | Delete custom command |
+| `!listcmds` | List custom commands |
+| `!rank` / `/rank` | Check XP rank |
+| `!leaderboard` / `/leaderboard` | XP leaderboard |
+| `!afk` / `/afk` | Set AFK status |
+| `!rolepanel` / `/rolepanel` | Create role picker |
 
-Logs are formatted and can be easily integrated with your preferred logging system.
+---
+
+## Features
+
+### 🤖 AI Integration
+```python
+bot.add_ai_provider("groq", "API_KEY")
+bot.ai_chat(provider="groq", context_file="data.txt")
+```
+
+### 🎉 Giveaway System
+```
+!giveaway 1h "Discord Nitro"
+```
+Timed giveaway with 🎉 reaction entry and random winner selection.
+
+### ⏰ Reminders
+```
+!remind 30m Check the oven
+```
+Bot DMs you after the specified time.
+
+### 📝 Custom Commands
+```
+!addcmd hello Hello everyone!    → creates !hello
+!delcmd hello                    → removes !hello
+!listcmds                        → list all custom commands
+```
+
+### 📊 Leveling/XP System
+```python
+bot.enable_leveling(xp_per_message=15)
+```
+Users gain XP per message, level up notifications, `!rank` and `!leaderboard`.
+
+### 💤 AFK System
+```python
+bot.enable_afk_system()
+```
+`!afk reason` → Bot notifies when someone mentions an AFK user.
+
+### ⭐ Starboard
+```python
+bot.enable_starboard(channel_id=123, emoji="⭐", threshold=3)
+```
+Messages with enough ⭐ reactions get reposted to a starboard channel.
+
+### 🔊 Temp Voice Channels
+```python
+bot.enable_temp_voice(trigger_channel_id=123)
+```
+Join a trigger channel → get your own VC → auto-deletes when empty.
+
+### 🎭 Button/Dropdown Roles
+```python
+bot.add_button_role(role_id=111, label="Gamer", emoji="🎮")
+bot.add_button_role(role_id=222, label="Artist", emoji="🎨")
+bot.enable_button_roles()
+# Then use !rolepanel or /rolepanel
+```
+
+### 👋 Auto Role
+```python
+bot.auto_role(role_id=123)
+```
+
+### 🛡️ Anti-Spam
+```python
+bot.enable_anti_spam(max_messages=5, interval=5, action="mute")
+```
+
+### 📄 Embed Paginator
+```python
+from fastdc import EmbedPaginator
+paginator = EmbedPaginator([embed1, embed2, embed3])
+await ctx.send(embed=embed1, view=paginator)
+```
+
+### 🎨 Embed Builder
+```python
+from fastdc import QuickEmbed
+embed = QuickEmbed.success("Done!", "Task completed.")
+embed = QuickEmbed.error("Error", "Something went wrong.")
+```
+
+### ⏱️ Scheduled Messages
+```python
+bot.schedule_message(channel_id=123, message="Reminder!", delay_seconds=3600)
+```
+
+---
+
+## Setup
+
+1. [Discord Developer Portal](https://discord.com/developers/applications) → Create bot → Enable Privileged Intents
+2. **Groq**: [console.groq.com](https://console.groq.com/) | **OpenAI**: [platform.openai.com](https://platform.openai.com/)
 
 ---
 
 ## Contribution
 
-Contributions are welcome!  
-If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
-
----
+Contributions welcome! Open an issue or submit a PR.
 
 ## License
 
-Licensed under the [MIT License](LICENSE).
-
----
+[MIT](LICENSE)
 
 ## ❤️ Support
 
-If you like this project, consider giving it a ⭐ on GitHub or sharing it with others!
-
-<!-- ## 🌐 Website Documentation -->
-<!-- [FastDC Website](https://fastdc.vercel.app/) -->
-
-## Note : 
-- This project will be updated regularly with new features and improvements
----
+Give it a ⭐ on GitHub if you like this project!
