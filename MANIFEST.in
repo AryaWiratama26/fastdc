@@ -1,0 +1,5 @@
+include DOC.md
+include README.md
+include LICENSE
+recursive-include fastdc/dashboard/templates *
+recursive-include fastdc/dashboard/static *
