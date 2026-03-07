@@ -87,56 +87,56 @@ bot.run()
 
 ## Features
 
-### 🤖 AI Integration
+### AI Integration
 ```python
 bot.add_ai_provider("groq", "API_KEY")
 bot.ai_chat(provider="groq", context_file="data.txt")
 ```
 
-### 🎉 Giveaway System
+### Giveaway System
 ```
 !giveaway 1h "Discord Nitro"
 ```
-Timed giveaway with 🎉 reaction entry and random winner selection.
+Timed giveaway with reaction entry and random winner selection.
 
-### ⏰ Reminders
+### Reminders
 ```
 !remind 30m Check the oven
 ```
 Bot DMs you after the specified time.
 
-### 📝 Custom Commands
+### Custom Commands
 ```
 !addcmd hello Hello everyone!    → creates !hello
 !delcmd hello                    → removes !hello
 !listcmds                        → list all custom commands
 ```
 
-### 📊 Leveling/XP System
+### Leveling/XP System
 ```python
 bot.enable_leveling(xp_per_message=15)
 ```
 Users gain XP per message, level up notifications, `!rank` and `!leaderboard`.
 
-### 💤 AFK System
+### AFK System
 ```python
 bot.enable_afk_system()
 ```
 `!afk reason` → Bot notifies when someone mentions an AFK user.
 
-### ⭐ Starboard
+### Starboard
 ```python
 bot.enable_starboard(channel_id=123, emoji="⭐", threshold=3)
 ```
-Messages with enough ⭐ reactions get reposted to a starboard channel.
+Messages with enough star reactions get reposted to a starboard channel.
 
-### 🔊 Temp Voice Channels
+### Temp Voice Channels
 ```python
 bot.enable_temp_voice(trigger_channel_id=123)
 ```
 Join a trigger channel → get your own VC → auto-deletes when empty.
 
-### 🎭 Button/Dropdown Roles
+### Button/Dropdown Roles
 ```python
 bot.add_button_role(role_id=111, label="Gamer", emoji="🎮")
 bot.add_button_role(role_id=222, label="Artist", emoji="🎨")
@@ -144,31 +144,31 @@ bot.enable_button_roles()
 # Then use !rolepanel or /rolepanel
 ```
 
-### 👋 Auto Role
+### Auto Role
 ```python
 bot.auto_role(role_id=123)
 ```
 
-### 🛡️ Anti-Spam
+### Anti-Spam
 ```python
 bot.enable_anti_spam(max_messages=5, interval=5, action="mute")
 ```
 
-### 📄 Embed Paginator
+### Embed Paginator
 ```python
 from fastdc import EmbedPaginator
 paginator = EmbedPaginator([embed1, embed2, embed3])
 await ctx.send(embed=embed1, view=paginator)
 ```
 
-### 🎨 Embed Builder
+### Embed Builder
 ```python
 from fastdc import QuickEmbed
 embed = QuickEmbed.success("Done!", "Task completed.")
 embed = QuickEmbed.error("Error", "Something went wrong.")
 ```
 
-### ⏱️ Scheduled Messages
+### Scheduled Messages
 ```python
 bot.schedule_message(channel_id=123, message="Reminder!", delay_seconds=3600)
 ```
@@ -190,6 +190,6 @@ Contributions welcome! Open an issue or submit a PR.
 
 [MIT](LICENSE)
 
-## ❤️ Support
+## Support
 
-Give it a ⭐ on GitHub if you like this project!
+Give it a star on GitHub if you like this project!
